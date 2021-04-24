@@ -1,0 +1,35 @@
+{
+    "name": "adriankeenan/bugsnag-event-csv",
+    "type": "project",
+    "description": "CLi tool for exporting Bugsnag error events to a CSV.",
+    "authors": [
+        {
+            "name": "Adrian Keenan",
+            "email": "git@adriankeenan.co.uk"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "ext-json": "*",
+        "symfony/console": "^5.2",
+        "guzzlehttp/guzzle": "^7.2",
+        "tiagohillebrandt/php-parse-link-header": "^1.0",
+        "illuminate/collections": "^8.33"
+    },
+    "autoload": {
+        "psr-4": {
+            "Keenan\\": "src/"
+        }
+    },
+    "bin": [
+        "bin/main.php"
+    ],
+    "require-dev": {
+        "clue/phar-composer": "^1.2",
+        "phpunit/phpunit": "^9"
+    },
+    "scripts": {
+        "build-phar": "./vendor/bin/phar-composer build . dist/bugsnag-event-csv",
+        "test":  "./vendor/bin/phpunit tests"
+    }
+}
