@@ -29,7 +29,7 @@ id,received_at,exception_message,user_id
 You can copy the pre-built phar to a folder in your path for easy access.
 
 ```
-wget https://github.com/adriankeenan/bugsnag-event-csv/raw/master/dist/bugsnag-event-csv \
+wget https://raw.githubusercontent.com/adriankeenan/bugsnag-event-csv/master/dist/bugsnag-event-csv \
     && chmod +x bugsnag-event-csv \
     && sudo mv bugsnag-event-csv /usr/local/bin/bugsnag-event-csv
 ```
