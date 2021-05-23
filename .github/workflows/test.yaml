@@ -12,10 +12,10 @@ jobs:
                 expirimental:
                     - false
                 php_version:
-                    - 7.4
-                    - 8.0
+                    - '7.4'
+                    - '8.0'
                 include:
-                    - php_version: 8.1
+                    - php_version: '8.1'
                     experimental: true
         steps:
             - name: Checkout
