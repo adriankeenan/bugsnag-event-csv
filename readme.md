@@ -44,23 +44,38 @@ Build a distributable .phar with `composer build-phar`
 
 ## Usage
 
-Run `bugsnag-event-csv ORG_ID_OR_SLUG PROJECT_ID_OR_SLUG ERROR_ID --key API_KEY`
+Run `bugsnag-event-csv ORG_ID_OR_SLUG PROJECT_ID_OR_SLUG ERROR_IDS --key API_KEY`
+
+### Keys
 
 The API key does not need to be specified in the `--key` option if it is set in an ENV var `BUGNSAG_API_KEY`.
+
+### Multiple errors
+
+You can fetch events from multiple errors, eg if the same error is recorded as multiple errors within bugsnag, by
+supplying multiple error IDs separated by a comma.
+
+### Event count
 
 By default, the last 100 events are returned, however you can use `--event_count X` to increase the number of events
 returned. In theory this can be infinite as the API client supports pagination, however this will take a long time if
 there are a lot of events due to API rate limits.
+
+### Adding columns
 
 A standard set of columns will be exported by default. You can add additional columns from any field in the Bugsnag 
 errors API response. To add additional columns, add column arguments `--column PATH_TO_VALUE:NAME` 
 where `PATH_TO_VALUE` is the dot notation for the value in the
 [event response](https://bugsnagapiv2.docs.apiary.io/#reference/errors/errors/list-the-errors-on-a-project) and `NAME`
 is the name to use in the CSV header row. For example, to add a "device id" column for a custom `device_id` meta field,
-use `--column metaData.device_id:device_id`,
+use `--column "metaData.device_id:device id"`,
+
+### Inspecting responses
 
 You can inspect the raw response from Bugsnag in order to determine the data paths by using the `--raw`
 option.
+
+### Formatting
 
 Structured data (such as arrays and objects) will be serialised as JSON strings. Options are available for specifying
 the values of `true`, `false`, `null` and non-existent values. Use the `--help` option to see these options.

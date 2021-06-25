@@ -116,7 +116,11 @@ class Command extends SymfonyCommand
         $exporter = (new BugsnagEventExporter($client))
             ->setOrganisation($input->getArgument(static::ARG_ORGANISATION))
             ->setProject($input->getArgument(static::ARG_PROJECT))
-            ->setErrorId($input->getArgument(static::ARG_EVENT_ID));
+            ->setErrorIds(
+                $this->splitStringArray(
+                    $input->getArgument(static::ARG_EVENT_ID),
+                ),
+            );
 
         // Raw export
         $maxEvents = $input->getOption(static::OPT_EVENT_COUNT);
@@ -127,7 +131,7 @@ class Command extends SymfonyCommand
         }
 
         // Output CSV
-        $columns = $input->getOption(static::OPT_COLUMN);
+        $columns = $this->splitStringArray($input->getOption(static::OPT_COLUMN));
         $valueTrue = $input->getOption(static::OPT_ENCODING_TRUE);
         $valueFalse = $input->getOption(static::OPT_ENCODING_FALSE);
         $valueNull = $input->getOption(static::OPT_ENCODING_NULL);
@@ -144,5 +148,24 @@ class Command extends SymfonyCommand
 
         $output->write($csv);
         return SymfonyCommand::SUCCESS;
+    }
+
+    /**
+     * Accepts a string or list of strings. Splits each string by
+     * @param string|array $input
+     */
+    protected function splitStringArray($input): array
+    {
+        if (is_array($input) == false) {
+            $input = [$input];
+        }
+
+        return collect($input)
+            ->map(fn(string $entry) => explode(',', $entry))
+            ->flatten(1)
+            ->filter()
+            ->unique()
+            ->values()
+            ->toArray();
     }
 }

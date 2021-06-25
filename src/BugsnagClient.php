@@ -65,20 +65,20 @@ class BugsnagClient
      */
     private function makePaginatedRequest(string $method, string $path, array $query = [], ?int $maxRecords = null): array
     {
-        $results = [];
+        $results = collect();
 
         // Build complete URL
         $url = sprintf('%s/%s', $this->baseUrl, $path);
 
         // Make request until we reach the max number of records or run out of records to fetch
-        while ($maxRecords === null || count($results) < $maxRecords) {
+        while ($maxRecords === null || $results->count() < $maxRecords) {
 
             // Get response
             $response = $this->makeRawRequest($method, $url, $query);
 
             // Add results
             $data = json_decode((string)$response->getBody(), true);
-            $results = array_merge($results, $data);
+            $results = $results->concat($data);
 
             // Get next pagination link (if more results to fetch)
             $linkHeader = $response->getHeaderLine('Link') ?? null;
@@ -98,10 +98,10 @@ class BugsnagClient
 
         // Trim to max results
         if ($maxRecords > 0) {
-            $results = array_slice($results, 0, $maxRecords);
+            $results = $results->take($maxRecords);
         }
 
-        return $results;
+        return $results->values()->toArray();
     }
 
     /**
