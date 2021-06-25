@@ -7,7 +7,7 @@ use Symfony\Component\Console\Application;
 
 $command = new Command();
 
-$application = new Application();
+$application = new Application('bugsnag-event-csv', '1.0');
 $application->add($command);
 $application->setDefaultCommand($command->getName(), true);
 $application->run();
