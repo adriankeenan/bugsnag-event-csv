@@ -56,7 +56,7 @@ class BugsnagEventExporterTest extends TestCase
         $csv = $this->eventExporter
             ->setOrganisation('org_id')
             ->setProject('project_id')
-            ->setErrorId('error_id')
+            ->setErrorIds(['error_id'])
             ->exportCsv(
                 1,
                 [

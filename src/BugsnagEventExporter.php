@@ -9,7 +9,7 @@ class BugsnagEventExporter
     protected BugsnagClient $client;
     protected string $organisationId;
     protected string $projectId;
-    protected string $errorId;
+    protected array $errorIds;
 
     public function __construct(BugsnagClient $client)
     {
@@ -59,9 +59,9 @@ class BugsnagEventExporter
     /**
      * Set the error ID.
      */
-    public function setErrorId(string $errorId): BugsnagEventExporter
+    public function setErrorIds(array $errorIds): BugsnagEventExporter
     {
-        $this->errorId = $errorId;
+        $this->errorIds = $errorIds;
 
         return $this;
     }
@@ -71,15 +71,40 @@ class BugsnagEventExporter
      */
     public function getEvents(int $maxEvents): array
     {
-        if (empty($this->projectId) || empty($this->errorId)) {
-            throw new \Exception('Project and Error ID must be set before events can be fetched.', 500);
+        if (empty($this->projectId) || empty($this->errorIds)) {
+            throw new \Exception('Project and Error IDs must be set before events can be fetched.', 500);
         }
-        
-        return $this->client->getEvents(
-            $this->projectId,
-            $this->errorId,
-            $maxEvents,
-        );
+
+        // Fetch events from each error in turn until we've reached $maxEvents (if set)
+        $noEventLimit = $maxEvents === null;
+        $results = collect();
+
+        // Get events for each error
+        foreach ($this->errorIds as $errorId) {
+
+            // Determine number of events left to fetch
+            $remainingEvents = $noEventLimit ? null : $maxEvents - $results->count();
+
+            // No results needed, stop looping
+            if ($remainingEvents === 0) {
+                break;
+            }
+
+            // Get errors for this event
+            $events = $this->client->getEvents(
+                $this->projectId,
+                $errorId,
+                $maxEvents,
+            );
+            $results = $results->concat($events);
+        }
+
+        // Trim to max results
+        if ($maxEvents > 0) {
+            $results = $results->take($maxEvents);
+        }
+
+        return $results->values()->toArray();
     }
 
     /**
