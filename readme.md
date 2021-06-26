@@ -1,6 +1,6 @@
 # bugsnag-event-csv
 
-![example workflow](https://github.com/adriankeenan/bugsnag-event-csv/actions/workflows/test.yml/badge.svg)
+![example workflow](https://github.com/adriankeenan/bugsnag-event-csv/actions/workflows/test.yaml/badge.svg)
 
 CLi tool for exporting Bugsnag error events to a CSV. The columns can be customised to included structured metadata.
 This can be useful for creating custom reports or cleaning up after an error occurs (re-attempting operations, updating
