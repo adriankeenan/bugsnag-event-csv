@@ -24,6 +24,11 @@ id,received_at,exception_message,user_id
 60847fac0077f8f0cc660000,2021-04-24T20:29:32.946Z,"Test exception A",6675
 ```
 
+This tool does not include the ability to filter results. This can be achieved with other tools which can apply
+transformations on CSVs such as `csvsql` in [csvkit](https://csvkit.readthedocs.io/en/latest/),
+eg `bugsnag-event-csv ... | csvsql --query "select * from stdin where column = 'value' > out.csv"`.
+
+
 ## Installation
 
 You can copy the pre-built phar to a folder in your path for easy access.
