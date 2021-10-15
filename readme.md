@@ -31,6 +31,15 @@ eg `bugsnag-event-csv ... | csvsql --query "select * from stdin where column = '
 
 ## Installation
 
+### Docker
+
+Run as a docker container
+
+`docker run adriankeenan/bugsnag-event-csv ...`
+
+
+### Executable
+
 You can copy the pre-built phar to a folder in your path for easy access.
 
 ```
