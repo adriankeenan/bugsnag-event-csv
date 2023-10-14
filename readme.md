@@ -58,11 +58,11 @@ Build a distributable .phar with `composer build-phar`
 
 ## Usage
 
-Run `bugsnag-event-csv ORG_ID_OR_SLUG PROJECT_ID_OR_SLUG ERROR_IDS --key API_KEY`
+Run `bugsnag-event-csv ORG_ID_OR_SLUG PROJECT_ID_OR_SLUG ERROR_IDS --api_key API_KEY`
 
 ### Keys
 
-The API key does not need to be specified in the `--key` option if it is set in an ENV var `BUGNSAG_API_KEY`.
+The API key does not need to be specified in the `--api_key` option if it is set in an ENV var `BUGNSAG_API_KEY`.
 
 ### Multiple errors
 
