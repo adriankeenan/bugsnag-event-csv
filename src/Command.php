@@ -104,7 +104,7 @@ class Command extends SymfonyCommand
 
         if (empty($apiKey)) {
             throw new \Exception(
-                'No API key specified. Please specify the key using -k (--key) or populate the '.
+                'No API key specified. Please specify the key using -k (--api_key) or populate the '.
                 'BUGSNAG_API_KEY env var.',
             );
         }
