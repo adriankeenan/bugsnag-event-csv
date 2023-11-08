@@ -16,4 +16,5 @@ RUN composer install \
     --no-dev \
     --prefer-dist
 
+ENTRYPOINT [ "php", "./bin/main.php" ]
 CMD [ "php", "./bin/main.php" ]
