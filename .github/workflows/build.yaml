@@ -1,5 +1,4 @@
 name: Test & Publish
-description: Test and publish image
 
 on:
     push:
