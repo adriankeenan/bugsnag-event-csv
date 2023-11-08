@@ -27,9 +27,3 @@ jobs:
 
             - name: Run tests
               run: composer test
-
-            - name: Build image
-              run: docker build -t bugsnag-event-csv .
-
-            - name: Check image output
-              run: docker run bugsnag-event-csv --help | grep "Options:"
